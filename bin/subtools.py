@@ -40,17 +40,19 @@ def main():
     cfg_fn = os.path.expanduser(sys_args.cfg_filename)
     if not os.path.exists(cfg_fn):
         print("configure file does not found")
-    cfg.read(cfg_fn)
-    if cfg.has_section(sys_args.name):
-        for opt in cfg.options(sys_args.name):
-            opts[opt] = cfg.get(sys_args.name,opt)
-    for opt in sys_args.dic["opts"]:
-        val = vars(sys_args)[opt["name"]]
-        if not val:
-            continue
-        if "type" in opt:
-            val = opt["type"](val)
-        opts[opt["name"]] = val
+    else:
+        cfg.read(cfg_fn)
+        if cfg.has_section(sys_args.name):
+            for opt in cfg.options(sys_args.name):
+                opts[opt] = cfg.get(sys_args.name,opt)
+    if "opt" in  sys_args.dic
+        for opt in sys_args.dic["opts"]:
+            val = vars(sys_args)[opt["name"]]
+            if not val:
+                continue
+            if "type" in opt:
+                val = opt["type"](val)
+            opts[opt["name"]] = val
 
     # execute
     func = sys_args.dic["func"]
