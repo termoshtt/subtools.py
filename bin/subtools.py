@@ -45,7 +45,7 @@ def main():
         if cfg.has_section(sys_args.name):
             for opt in cfg.options(sys_args.name):
                 opts[opt] = cfg.get(sys_args.name,opt)
-    if "opt" in  sys_args.dic
+    if "opt" in  sys_args.dic:
         for opt in sys_args.dic["opts"]:
             val = vars(sys_args)[opt["name"]]
             if not val:
