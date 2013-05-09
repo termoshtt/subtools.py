@@ -18,6 +18,8 @@ def main():
         psr = sub_psr.add_parser(subcmd,help=dic["help"])
         for arg in dic["args"]:
             psr.add_argument(arg["name"],help=arg["help"])
+        for opt in dic["opts"]:
+            psr.add_argument("--"+opt["name"],help=opt["help"])
         psr.set_defaults(name=subcmd)
         psr.set_defaults(dic=dic)
 
@@ -30,7 +32,13 @@ def main():
         if "type" in arg:
             val = arg["type"](val)
         args.append(val)
-    func(*args)
+    opts = {}
+    for opt in sys_args.dic["opts"]:
+        val = vars(sys_args)[opt["name"]]
+        if "type" in opt:
+            val = opt["type"](val)
+        opts[opt["name"]] = val
+    func(*args,**opts)
 
 if __name__ == "__main__":
     main()
