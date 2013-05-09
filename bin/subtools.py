@@ -17,10 +17,16 @@ def main():
     sub_psr = parser.add_subparsers(help="auto-generated valid subcommands")
     for subcmd in subcmds.subcmds_dics:
         dic = subcmds.subcmds_dics[subcmd]
+        if "help" not in dic:
+            dic["help"] = ""
         psr = sub_psr.add_parser(subcmd,help=dic["help"])
         for arg in dic["args"]:
+            if "help" not in arg:
+                arg["help"] = ""
             psr.add_argument(arg["name"],help=arg["help"])
         for opt in dic["opts"]:
+            if "help" not in opt:
+                opt["help"] = ""
             psr.add_argument("--"+opt["name"],help=opt["help"])
         psr.set_defaults(name=subcmd)
         psr.set_defaults(dic=dic)
